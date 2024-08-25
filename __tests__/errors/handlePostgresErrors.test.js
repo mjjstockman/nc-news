@@ -12,7 +12,7 @@ describe('handlePostgresErrors', () => {
     next = jest.fn();
   });
 
-  it('responds with 400 for error code 22P02 (invalid input syntax)', () => {
+  it('responds with status 400 and custom err msg if error code=22P02 (invalid input syntax)', () => {
     const err = { code: '22P02' };
 
     handlePostgresErrors(err, req, res, next);
@@ -23,7 +23,7 @@ describe('handlePostgresErrors', () => {
     });
   });
 
-  it('responds with 400 for error code 23502 (not null violation)', () => {
+  it('responds with status 400 and custom err msg if error code=23502 (not null violation)', () => {
     const err = { code: '23502' };
 
     handlePostgresErrors(err, req, res, next);
@@ -34,7 +34,7 @@ describe('handlePostgresErrors', () => {
     });
   });
 
-  it('responds with 404 for error code 23503 (foreign key violation)', () => {
+  it('responds with status 404 and custom err msg if error code=23503 (foreign key violation)', () => {
     const err = { code: '23503' };
 
     handlePostgresErrors(err, req, res, next);
@@ -46,7 +46,7 @@ describe('handlePostgresErrors', () => {
     expect(next).not.toHaveBeenCalled();
   });
 
-  it('should respond with 409 for error code 23505 (duplicate key violation)', () => {
+  it('responds with status 409 and custom err msg if error code=23505 (duplicate key violation)', () => {
     const err = { code: '23505' };
 
     handlePostgresErrors(err, req, res, next);

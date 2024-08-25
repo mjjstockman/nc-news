@@ -3,7 +3,6 @@ const app = express();
 
 const { getTopics } = require('./controllers/topics.controllers');
 const { handleCustomErrors } = require('./errors/handleCustomErrors');
-const { handleServerErrors } = require('./errors/handleServerErrors');
 
 app.get('/api/topics', getTopics);
 
@@ -14,6 +13,5 @@ app.use((req, res, next) => {
 });
 
 app.use(handleCustomErrors);
-app.use(handleServerErrors);
 
 module.exports = app;

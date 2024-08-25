@@ -1,6 +1,6 @@
 const { handleCustomErrors } = require('../../errors/handleCustomErrors');
 
-describe.only('handleCustomErrors', () => {
+describe('handleCustomErrors', () => {
   let req, res, next;
 
   beforeEach(() => {
@@ -9,7 +9,7 @@ describe.only('handleCustomErrors', () => {
     next = jest.fn();
   });
 
-  it('sends a response with the error status and message if err has status and msg properties', () => {
+  it('responds with status 400 and custom err msg if err has status and msg properties', () => {
     const err = { status: 400, msg: 'Bad Request: Custom Error' };
     handleCustomErrors(err, req, res, next);
     expect(res.status).toHaveBeenCalledWith(400);
