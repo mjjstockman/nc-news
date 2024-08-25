@@ -8,7 +8,7 @@ beforeEach(() => seed(testData));
 afterAll(() => db.end());
 
 describe('/api/topics', () => {
-  it('GET:200 gets all topics with a slug and description properties', () => {
+  it('GET:400 gets all topics with a slug and description properties', () => {
     return request(app)
       .get('/api/topics')
       .expect(200)
