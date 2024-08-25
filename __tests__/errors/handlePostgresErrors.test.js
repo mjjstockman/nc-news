@@ -46,7 +46,7 @@ describe('handlePostgresErrors', () => {
     expect(next).not.toHaveBeenCalled();
   });
 
-  it('responds with status 409 and custom err msg if error code=23505 (duplicate key violation)', () => {
+  it('responds with status 409 and custom err msg if error code=q23505 (duplicate key violation)', () => {
     const err = { code: '23505' };
 
     handlePostgresErrors(err, req, res, next);
