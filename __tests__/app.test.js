@@ -8,7 +8,7 @@ beforeEach(() => seed(testData));
 afterAll(() => db.end());
 
 describe('/api/topics', () => {
-  it('GET:400 gets all topics with a slug and description properties', () => {
+  it('responds with status 200 and all topics with slug and description properties', () => {
     return request(app)
       .get('/api/topics')
       .expect(200)
@@ -23,8 +23,9 @@ describe('/api/topics', () => {
         });
       });
   });
+
   describe('errors', () => {
-    it('GET:404 sends appropriate error message for a non-existent endpoint', () => {
+    it('responds with status 404 and custom err msg for a non-existent endpoint', () => {
       return request(app)
         .get('/api/idonotexist')
         .expect(404)
