@@ -13,10 +13,8 @@ describe('/api', () => {
     return request(app)
       .get('/api')
       .expect(200)
-      .then(({ body }) => {
-        console.log('Response Body:', body);
-        console.log('Expected Data:', endpointsData);
-        expect(body.endpoints).toEqual(endpointsData);
+      .then(({ body: { endpoints } }) => {
+        expect(endpoints).toEqual(endpointsData);
       });
   });
 });
@@ -43,10 +41,8 @@ describe('/api/topics', () => {
       return request(app)
         .get('/api/idonotexist')
         .expect(404)
-        .then(({ body }) => {
-          expect(body.msg).toBe(
-            "The page you're trying to access doesn't exist!"
-          );
+        .then(({ body: { msg } }) => {
+          expect(msg).toBe("The page you're trying to access doesn't exist!");
         });
     });
   });
