@@ -5,12 +5,16 @@ const { getEndpoints } = require('./controllers/endpoints.controllers');
 const { getTopics } = require('./controllers/topics.controllers');
 const { getArticles } = require('./controllers/articles.controllers');
 const { getArticleById } = require('./controllers/articles.controllers');
+const {
+  getCommentsByArticleId,
+} = require('./controllers/comments.controllers');
 const { handleCustomErrors } = require('./errors/handleCustomErrors');
 
 app.get('/api', getEndpoints);
 app.get('/api/topics', getTopics);
 app.get('/api/articles', getArticles);
 app.get('/api/articles/:article_id', getArticleById);
+app.get('/api/articles/:article_id/comments', getCommentsByArticleId);
 
 app.use((req, res, next) => {
   res

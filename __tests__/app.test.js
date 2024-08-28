@@ -112,3 +112,26 @@ describe('/api/articles', () => {
     });
   });
 });
+
+describe('/api/articles/:article_id/comments', () => {
+  it('responds with status 200 and all comments for an article with the correct properties', () => {
+    return request(app)
+      .get('/api/articles/1/comments')
+      .expect(200)
+      .then(({ body: { comments } }) => {
+        expect(comments).toBeInstanceOf(Array);
+        expect(comments).toHaveLength(11);
+        expect(comments).toBeSortedBy('created_at', { descending: true });
+        comments.forEach((comment) => {
+          expect(comment).toMatchObject({
+            comment_id: expect.any(Number),
+            body: expect.any(String),
+            article_id: expect.any(Number),
+            author: expect.any(String),
+            votes: expect.any(Number),
+            created_at: expect.any(String),
+          });
+        });
+      });
+  });
+});
