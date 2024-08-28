@@ -16,3 +16,22 @@ exports.fetchArticleById = (article_id) => {
       return articles[0];
     });
 };
+
+exports.fetchArticles = () => {
+  return db
+    .query(
+      `
+      SELECT articles.*,
+      COUNT(comments.comment_id)::INTEGER AS comment_count
+      FROM articles
+      LEFT JOIN comments ON comments.article_id = articles.article_id
+      GROUP BY articles.article_id;
+      `
+    )
+    .then(({ rows: articles }) => {
+      if (articles.length === 0) {
+        return Promise.reject({ status: 404, msg: 'Not Found' });
+      }
+      return articles;
+    });
+};
