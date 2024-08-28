@@ -49,19 +49,21 @@ describe('/api/topics', () => {
 });
 
 describe('/api/articles', () => {
-  it('responds with status 200 and an array of all articles', () => {
+  it('responds with status 200 and an array of articles without the body property, sorted by date in ascending order', () => {
     return request(app)
       .get('/api/articles')
       .expect(200)
       .then(({ body: { articles } }) => {
-        expect(Array.isArray(articles)).toBe(true);
-        expect(articles.length).toBe(13);
+        expect(articles).toBeInstanceOf(Array);
+        expect(articles).toHaveLength(13);
+        expect(articles).toBeSortedBy('created_at', { descending: true });
         articles.forEach((article) => {
+          expect(article).not.toHaveProperty('body');
           expect(article).toMatchObject({
-            author: expect.any(String),
-            title: expect.any(String),
             article_id: expect.any(Number),
+            title: expect.any(String),
             topic: expect.any(String),
+            author: expect.any(String),
             created_at: expect.any(String),
             votes: expect.any(Number),
             article_img_url: expect.any(String),
