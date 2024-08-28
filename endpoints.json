@@ -15,12 +15,33 @@
     "exampleResponse": {
       "articles": [
         {
+          "article_id": 1,
           "title": "Seafood substitutions are increasing",
           "topic": "cooking",
           "author": "weegembump",
-          "body": "Text from the article..",
           "created_at": "2018-05-30T15:59:13.341Z",
           "votes": 0,
+          "article_img_url": "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
+          "comment_count": 6
+        },
+        {
+          "article_id": 2,
+          "title": "I'm a title",
+          "topic": "gaming",
+          "author": "me",
+          "created_at": "2018-07-30T15:59:13.341Z",
+          "votes": 10,
+          "article_img_url": "https://images.pexels.com/photos/658651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
+          "comment_count": 55
+        },
+        {
+          "article_id": 3,
+          "title": "The Sequal",
+          "topic": "gaming",
+          "author": "me",
+          "created_at": "2019-05-30T15:59:13.341Z",
+          "votes": 2,
+          "article_img_url": "https://images.pexels.com/photos/15832651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
           "comment_count": 6
         }
       ]
@@ -31,6 +52,7 @@
     "exampleResponse": {
       "article": [
         {
+          "article_id": 1,
           "title": "Living in the shadow of a great man",
           "topic": "mitch",
           "author": "butter_bridge",
