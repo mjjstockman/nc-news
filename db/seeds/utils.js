@@ -20,3 +20,5 @@ exports.formatComments = (comments, idLookup) => {
     };
   });
 };
+
+const db = require('./db/connection');
