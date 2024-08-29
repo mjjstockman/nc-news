@@ -157,6 +157,15 @@ describe('/api/articles/:article_id/comments', () => {
       });
   });
 
+  it('GET: responds with status 400 and a message for an invalid article ID', () => {
+    return request(app)
+      .get('/api/articles/iamnotvalid/comments')
+      .expect(400)
+      .then(({ body: { msg } }) => {
+        expect(msg).toBe('Invalid article ID');
+      });
+  });
+
   it('POST: responds with status 201 and the posted comment', () => {
     const newComment = {
       username: 'butter_bridge',
