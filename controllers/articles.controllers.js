@@ -10,7 +10,6 @@ exports.getArticleById = (req, res, next) => {
 
   fetchArticleById(article_id)
     .then((article) => {
-      article.created_at = new Date(article.created_at).getTime();
       res.status(200).send({ article });
     })
     .catch(next);
