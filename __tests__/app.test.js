@@ -103,7 +103,7 @@ describe('/api/articles', () => {
             topic: 'mitch',
             author: 'butter_bridge',
             body: 'I find this existence challenging',
-            created_at: expect.any(String), // Corrected to match any string for date
+            created_at: expect.any(String),
             votes: 100,
             article_img_url:
               'https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700',
@@ -189,5 +189,66 @@ describe('/api/articles/:article_id/comments', () => {
           body.comment.created_at
         );
       });
+  });
+
+  test('POST: responds with status 404 and a message for a non-existent article_id', () => {
+    const newComment = {
+      username: 'butter_bridge',
+      body: 'super post!',
+    };
+    return request(app)
+      .post('/api/articles/999999/comments')
+      .send(newComment)
+      .expect(404)
+      .then(({ body: { msg } }) => expect(msg).toBe('Article Not Found'));
+  });
+
+  test('POST: responds with status 404 and a message for an invalid article_id', () => {
+    const newComment = {
+      username: 'butter_bridge',
+      body: 'super post!',
+    };
+    return request(app)
+      .post('/api/articles/notvalid/comments')
+      .send(newComment)
+      .expect(400)
+      .then(({ body: { msg } }) => expect(msg).toBe('Bad Request'));
+  });
+
+  test('POST: responds with status 404 and a message for a non-existent username', () => {
+    const newComment = {
+      username: 'idonotexist',
+      body: 'super post!',
+    };
+    return request(app)
+      .post('/api/articles/2/comments')
+      .send(newComment)
+      .expect(404)
+      .then(({ body: { msg } }) => expect(msg).toBe('Username Not Found'));
+  });
+  test('POST: responds with status 404 and a message if body is missing', () => {
+    const newComment = {
+      username: 'butter_bridge',
+    };
+    return request(app)
+      .post('/api/articles/1/comments')
+      .send(newComment)
+      .expect(400)
+      .then(({ body: { msg } }) =>
+        expect(msg).toBe('Username and comment are required')
+      );
+  });
+
+  test('POST: responds with status 404 and a message if username is missing', () => {
+    const newComment = {
+      body: 'super post!',
+    };
+    return request(app)
+      .post('/api/articles/1/comments')
+      .send(newComment)
+      .expect(400)
+      .then(({ body: { msg } }) =>
+        expect(msg).toBe('Username and comment are required')
+      );
   });
 });
