@@ -2,6 +2,7 @@ const {
   fetchCommentsByArticleId,
   articleExists,
   insertComment,
+  removeCommentById,
 } = require('../models/comments.models');
 
 exports.getCommentsByArticleId = (req, res, next) => {
@@ -50,10 +51,14 @@ exports.postComment = (req, res, next) => {
 exports.deleteCommentById = (req, res, next) => {
   const { comment_id } = req.params;
 
+  if (isNaN(Number(comment_id))) {
+    return res.status(400).send({ msg: 'Bad Request' });
+  }
+
   removeCommentById(comment_id)
     .then((deleteCount) => {
       if (deleteCount === 0) {
-        return res.status(404).send({ msg: 'Comment not found' });
+        return res.status(404).send({ msg: 'Comment Not Found' });
       }
       res.status(204).send();
     })

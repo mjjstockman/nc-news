@@ -52,12 +52,13 @@ exports.insertComment = (article_id, username, body) => {
     return Promise.reject({ status: 400, msg: 'Bad Request' });
   }
 
-  return this.articleExists(article_id)
+  return exports
+    .articleExists(article_id)
     .then((articleExists) => {
       if (!articleExists) {
         return Promise.reject({ status: 404, msg: 'Article Not Found' });
       }
-      return this.userExists(username);
+      return exports.userExists(username);
     })
     .then((userExists) => {
       if (!userExists) {
