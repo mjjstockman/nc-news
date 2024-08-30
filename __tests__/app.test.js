@@ -282,14 +282,14 @@ describe('/api/comments/:comment_id', () => {
     return request(app).delete('/api/comments/1').expect(204);
   });
 
-  it('DELETE: responds with status 404 and a message if comment does not exist', () => {
+  it('DELETE: responds with status 404 and a message if comment_id is valid but non-existent', () => {
     return request(app)
       .delete('/api/comments/9999')
       .expect(404)
       .then(({ body: { msg } }) => expect(msg).toBe('Comment Not Found'));
   });
 
-  it('DELETE: responds with status 400 and a message if comment id invalid', () => {
+  it('DELETE: responds with status 400 and a message if comment_id is invalid', () => {
     return request(app)
       .delete('/api/comments/not-a-number')
       .expect(400)
