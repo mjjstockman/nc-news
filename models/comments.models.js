@@ -15,6 +15,21 @@ exports.articleExists = (article_id) => {
     });
 };
 
+exports.userExists = (username) => {
+  return db
+    .query(
+      `
+        SELECT 1
+        FROM users
+        WHERE username = $1
+      `,
+      [username]
+    )
+    .then(({ rows }) => {
+      return rows.length > 0;
+    });
+};
+
 exports.fetchCommentsByArticleId = (article_id) => {
   return db
     .query(
@@ -33,23 +48,33 @@ exports.fetchCommentsByArticleId = (article_id) => {
 };
 
 exports.insertComment = (article_id, username, body) => {
-  return this.articleExists(article_id).then((exists) => {
-    if (!exists) {
-      return Promise.reject({ status: 404, msg: 'Article Not Found' });
-    }
-    return db
-      .query(
+  if (isNaN(Number(article_id))) {
+    return Promise.reject({ status: 400, msg: 'Bad Request' });
+  }
+
+  return this.articleExists(article_id)
+    .then((articleExists) => {
+      if (!articleExists) {
+        return Promise.reject({ status: 404, msg: 'Article Not Found' });
+      }
+      return this.userExists(username);
+    })
+    .then((userExists) => {
+      if (!userExists) {
+        return Promise.reject({ status: 404, msg: 'Username Not Found' });
+      }
+      return db.query(
         `
-        INSERT INTO comments (article_id, author, body, votes, created_at)
-        VALUES ($1, $2, $3, 0, NOW())
-        RETURNING *;
-      `,
+          INSERT INTO comments (article_id, author, body, votes, created_at)
+          VALUES ($1, $2, $3, 0, NOW())
+          RETURNING *;
+        `,
         [article_id, username, body]
-      )
-      .then(({ rows }) => rows[0])
-      .catch((err) => {
-        console.error('Database Error:', err);
-        throw err;
-      });
-  });
+      );
+    })
+    .then(({ rows }) => rows[0])
+    .catch((err) => {
+      console.error('Database Error:', err);
+      throw err;
+    });
 };
