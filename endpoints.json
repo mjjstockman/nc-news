@@ -48,7 +48,7 @@
     }
   },
   "GET /api/articles/:article_id": {
-    "description": "serves the article object with the given ID",
+    "description": "serves the article object with the given Id",
     "exampleResponse": {
       "article": [
         {

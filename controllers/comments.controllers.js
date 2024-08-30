@@ -46,3 +46,19 @@ exports.postComment = (req, res, next) => {
       }
     });
 };
+
+exports.deleteCommentById = (req, res, next) => {
+  const { comment_id } = req.params;
+
+  removeCommentById(comment_id)
+    .then((deleteCount) => {
+      if (deleteCount === 0) {
+        return res.status(404).send({ msg: 'Comment not found' });
+      }
+      res.status(204).send();
+    })
+    .catch((err) => {
+      console.error('Error deleting comment:', err);
+      next(err);
+    });
+};

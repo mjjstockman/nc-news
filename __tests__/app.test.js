@@ -276,3 +276,9 @@ describe('/api/articles/:article_id', () => {
       .then(({ body: { msg } }) => expect(msg).toBe('Invalid article ID'));
   });
 });
+
+// describe('/api/comments/:comment_id', () => {
+//   it('DELETE: responds with status 204 and deletes comment by Id', () => {
+//     return request(app).delete('/api/comments/1').expect(204);
+//   });
+// });
