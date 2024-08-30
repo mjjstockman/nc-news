@@ -48,7 +48,7 @@
     }
   },
   "GET /api/articles/:article_id": {
-    "description": "serves the article object with the given ID",
+    "description": "serves the article object with the given Id",
     "exampleResponse": {
       "article": [
         {
@@ -64,16 +64,24 @@
       ]
     }
   },
-  "POST/api/articles/:article_id/comments": {
+  "POST /api/articles/:article_id/comments": {
     "description": "adds a comment for an article",
     "exampleResponse": {
-      "comment": {
+      "article": {
         "comment_id": 1,
         "article_id": 1,
         "username": "user123",
         "body": "Great post!!",
         "created_at": "2018-05-30T15:59:13.341Z",
         "votes": 0
+      }
+    }
+  },
+  "PATCH /api/articles/:article_id": {
+    "description": "updates an article by Id",
+    "exampleResponse": {
+      "article": {
+        "votes": 10
       }
     }
   }

@@ -316,3 +316,23 @@ describe('GET: /api/articles/:article_id', () => {
     });
   });
 });
+
+describe('/api/comments/:comment_id', () => {
+  it('DELETE: responds with status 204 and deletes comment by Id', () => {
+    return request(app).delete('/api/comments/1').expect(204);
+  });
+
+  it('DELETE: responds with status 404 and a message if comment_id is valid but non-existent', () => {
+    return request(app)
+      .delete('/api/comments/9999')
+      .expect(404)
+      .then(({ body: { msg } }) => expect(msg).toBe('Comment Not Found'));
+  });
+
+  it('DELETE: responds with status 400 and a message if comment_id is invalid', () => {
+    return request(app)
+      .delete('/api/comments/not-a-number')
+      .expect(400)
+      .then(({ body: { msg } }) => expect(msg).toBe('Bad Request'));
+  });
+});
