@@ -252,3 +252,27 @@ describe('/api/articles/:article_id/comments', () => {
       );
   });
 });
+
+describe('/api/articles/:article_id', () => {
+  it('PATCH: responds with status 200 and the updated article', () => {
+    return request(app)
+      .patch('/api/articles/1')
+      .send({ inc_votes: 5 })
+      .expect(200)
+      .then(({ body: { article } }) => expect(article.votes).toBe(105));
+  });
+
+  it('GET: responds with status 404 and a message if the article_id does not exist', () => {
+    return request(app)
+      .get('/api/articles/99999')
+      .expect(404)
+      .then(({ body: { msg } }) => expect(msg).toBe('Not Found'));
+  });
+
+  it('GET: responds with status 400 and a message if the article_id is invalid', () => {
+    return request(app)
+      .get('/api/articles/invalid')
+      .expect(400)
+      .then(({ body: { msg } }) => expect(msg).toBe('Invalid article ID'));
+  });
+});
