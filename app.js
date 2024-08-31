@@ -14,7 +14,9 @@ const {
   deleteCommentById,
 } = require('./controllers/comments.controllers');
 
+const { handlePostgresErrors } = require('./errors/handlePostgresErrors');
 const { handleCustomErrors } = require('./errors/handleCustomErrors');
+const { handleServerErrors } = require('./errors/handleServerErrors');
 
 app.use(express.json());
 
@@ -35,6 +37,8 @@ app.use((req, res, next) => {
     .send({ msg: "The page you're trying to access doesn't exist!" });
 });
 
+app.use(handlePostgresErrors);
 app.use(handleCustomErrors);
+app.use(handleServerErrors);
 
 module.exports = app;
