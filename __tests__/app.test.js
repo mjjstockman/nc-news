@@ -21,6 +21,8 @@ describe('General API Endpoints', () => {
   });
 
   describe('Errors', () => {
+    // Nice test! Just remember that you don't need to check this type of error again, once is fine 👍
+    // DON'T NEED TO TEST ANY OTHER INCORRECT ENDPOINT??
     it('GET: responds with status 404 and custom error message for a non-existent endpoint', () => {
       return request(app)
         .get('/api/idonotexist')
@@ -94,7 +96,7 @@ describe('/api/articles', () => {
         .get('/api/articles/astring')
         .expect(400)
         .then((res) => {
-          expect(res.body.msg).toBe('Invalid article ID');
+          expect(res.body.msg).toBe('Bad request: invalid input syntax.');
         });
     });
 
@@ -142,10 +144,11 @@ describe('/api/articles', () => {
               expect(comment).toMatchObject({
                 comment_id: expect.any(Number),
                 body: expect.any(String),
-                article_id: expect.any(Number),
+                article_id: 1, // Nice first test, but we should be specifically asserting the article_id as this is what shows us if the query works as expect, if we actually are getting all comments linked to the article we expect.
                 author: expect.any(String),
                 votes: expect.any(Number),
               });
+              // I think it's up to you as to whether you want to keep this in. It does work and I can see why you've done it, but essentially as long as we know a "created_at" value is there (as per line 177) then it's fine without this. 🙂
               expect(comment.created_at).toEqual(expect.any(String));
               expect(new Date(comment.created_at).toISOString()).toBe(
                 comment.created_at

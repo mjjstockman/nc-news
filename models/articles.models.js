@@ -45,6 +45,7 @@ exports.fetchArticles = () => {
 };
 
 exports.updateArticleById = (article_id, inc_votes) => {
+  // We need to check whether the article exists or not in order to determined the reason a patch may fail.If it does not exist, it should throw a 404
   return db
     .query(
       `

@@ -8,11 +8,15 @@ const {
 exports.getCommentsByArticleId = (req, res, next) => {
   const { article_id } = req.params;
 
+  // not needed??
   if (isNaN(Number(article_id))) {
     return res.status(400).send({ msg: 'Invalid article ID' });
   }
 
   articleExists(article_id)
+    // I like the use of a check exists function, but you should not be manually respond with the error like this. The check exists function show reject with an error and allow the catch to deal with it. Once this refactor has been done it also means we should be able to use a Promise.all(...) instead of a .then(...) chain as well.
+    // We should also already have a model that tells us if an article id exists (HINT: from a previous task/endpoint)
+    // not needed??
     .then((exists) => {
       if (!exists) {
         return res.status(404).send({ msg: 'Article not found' });
