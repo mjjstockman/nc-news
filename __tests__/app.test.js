@@ -149,6 +149,8 @@ describe('/api/articles', () => {
                 votes: expect.any(Number),
               });
               // I think it's up to you as to whether you want to keep this in. It does work and I can see why you've done it, but essentially as long as we know a "created_at" value is there (as per line 177) then it's fine without this. 🙂
+              // ASK ABOUT THE TIME DIFFERENCE, thought solved by adding in package.json??
+              // Only need to test for created_at when specifically looking at created_at??
               expect(comment.created_at).toEqual(expect.any(String));
               expect(new Date(comment.created_at).toISOString()).toBe(
                 comment.created_at
@@ -273,6 +275,7 @@ describe('/api/articles', () => {
   });
 });
 
+// ASK........ best way to structure the describe/it blocks?????????
 describe('/api/comments', () => {
   describe('DELETE /api/comments/:comment_id', () => {
     it('responds with status 204 and deletes the comment by ID', () => {
