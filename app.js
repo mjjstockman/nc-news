@@ -29,6 +29,7 @@ app.patch('/api/articles/:article_id', patchArticleById);
 app.post('/api/articles/:article_id/comments', postComment);
 app.delete('/api/comments/:comment_id', deleteCommentById);
 
+// use app.all('/*')
 app.use((req, res, next) => {
   res
     .status(404)
