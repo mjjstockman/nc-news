@@ -21,7 +21,6 @@ describe('General API Endpoints', () => {
   });
 
   describe('Errors', () => {
-    // Nice test! Just remember that you don't need to check this type of error again, once is fine 👍
     // DON'T NEED TO TEST ANY OTHER INCORRECT ENDPOINT??
     it('GET: responds with status 404 and custom error message for a non-existent endpoint', () => {
       return request(app)
@@ -144,13 +143,10 @@ describe('/api/articles', () => {
               expect(comment).toMatchObject({
                 comment_id: expect.any(Number),
                 body: expect.any(String),
-                article_id: 1, // Nice first test, but we should be specifically asserting the article_id as this is what shows us if the query works as expect, if we actually are getting all comments linked to the article we expect.
+                article_id: 1,
                 author: expect.any(String),
                 votes: expect.any(Number),
               });
-              // I think it's up to you as to whether you want to keep this in. It does work and I can see why you've done it, but essentially as long as we know a "created_at" value is there (as per line 177) then it's fine without this. 🙂
-              // ASK ABOUT THE TIME DIFFERENCE, thought solved by adding in package.json??
-              // Only need to test for created_at when specifically looking at created_at??
               expect(comment.created_at).toEqual(expect.any(String));
               expect(new Date(comment.created_at).toISOString()).toBe(
                 comment.created_at
@@ -275,7 +271,6 @@ describe('/api/articles', () => {
   });
 });
 
-// ASK........ best way to structure the describe/it blocks?????????
 describe('/api/comments', () => {
   describe('DELETE /api/comments/:comment_id', () => {
     it('responds with status 204 and deletes the comment by ID', () => {
@@ -297,6 +292,26 @@ describe('/api/comments', () => {
         .expect(400)
         .then(({ body: { msg } }) => {
           expect(msg).toBe('Bad Request');
+        });
+    });
+  });
+});
+
+describe('/api/users', () => {
+  describe('GET /api/users', () => {
+    it('responds with status 200 and an array of users with username, name, and avatar_url properties', () => {
+      return request(app)
+        .get('/api/users')
+        .expect(200)
+        .then(({ body: { users } }) => {
+          expect(Array.isArray(users)).toBe(true);
+          users.forEach((user) => {
+            expect(user).toMatchObject({
+              username: expect.any(String),
+              name: expect.any(String),
+              avatar_url: expect.any(String),
+            });
+          });
         });
     });
   });
