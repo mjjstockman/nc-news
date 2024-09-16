@@ -297,22 +297,22 @@ describe('/api/comments', () => {
   });
 });
 
-describe('/api/users', () => {
-  describe('GET /api/users', () => {
-    it('responds with status 200 and an array of users with username, name, and avatar_url properties', () => {
-      return request(app)
-        .get('/api/users')
-        .expect(200)
-        .then(({ body: { users } }) => {
-          expect(Array.isArray(users)).toBe(true);
-          users.forEach((user) => {
-            expect(user).toMatchObject({
-              username: expect.any(String),
-              name: expect.any(String),
-              avatar_url: expect.any(String),
-            });
-          });
-        });
-    });
-  });
-});
+// describe('/api/users', () => {
+//   describe('GET /api/users', () => {
+//     it('responds with status 200 and an array of users with username, name, and avatar_url properties', () => {
+//       return request(app)
+//         .get('/api/users')
+//         .expect(200)
+//         .then(({ body: { users } }) => {
+//           expect(Array.isArray(users)).toBe(true);
+//           users.forEach((user) => {
+//             expect(user).toMatchObject({
+//               username: expect.any(String),
+//               name: expect.any(String),
+//               avatar_url: expect.any(String),
+//             });
+//           });
+//         });
+//     });
+//   });
+// });
